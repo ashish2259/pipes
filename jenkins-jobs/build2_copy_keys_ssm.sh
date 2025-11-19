@@ -18,24 +18,16 @@ if [ ! -f "$PUBKEY_PATH" ]; then
 fi
 
 echo "[INFO] Reading public key..."
-PUBKEY=$(cat "$PUBKEY_PATH" | sed 's/"/\\"/g')
-
-SSM_CMD=$(cat <<EOF
-mkdir -p /home/ec2-user/.ssh
-echo "$PUBKEY" >> /home/ec2-user/.ssh/authorized_keys
-chmod 600 /home/ec2-user/.ssh/authorized_keys
-chown ec2-user:ec2-user /home/ec2-user/.ssh/authorized_keys
-EOF
-)
+PUBKEY=$(sed 's/"/\\"/g' "$PUBKEY_PATH")
 
 echo "[INFO] Sending SSM command to all instances..."
 
 CMDID=$(aws ssm send-command \
   --region "$REGION" \
-  --instance-ids $(cat "$INST_FILE" | tr '\n' ' ') \
+  --instance-ids $(tr '\n' ' ' < "$INST_FILE") \
   --document-name "AWS-RunShellScript" \
   --comment "Inject Jenkins SSH Key" \
-  --parameters commands=["$SSM_CMD"] \
+  --parameters commands="[\"mkdir -p /home/ec2-user/.ssh\",\"echo $PUBKEY >> /home/ec2-user/.ssh/authorized_keys\",\"chmod 600 /home/ec2-user/.ssh/authorized_keys\",\"chown ec2-user:ec2-user /home/ec2-user/.ssh/authorized_keys\"]" \
   --query "Command.CommandId" \
   --output text)
 
