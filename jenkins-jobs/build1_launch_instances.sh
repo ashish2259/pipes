@@ -3,7 +3,7 @@ set -euo pipefail
 
 REGION="us-east-1"
 LAUNCH_TEMPLATE_ID="lt-0795ff7fe13a87132"
-COUNT=5
+COUNT=3
 
 WORKSPACE="${WORKSPACE:-$(pwd)}"
 OUTFILE="$WORKSPACE/instance_ids.txt"
