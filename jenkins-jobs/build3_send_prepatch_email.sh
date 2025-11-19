@@ -20,11 +20,7 @@ sendEmail -f "$FROM_EMAIL" \
           -s "$SMTP_HOST:$SMTP_PORT" \
           -xu "$SMTP_USER" \
           -xp "$SMTP_PASS" \
-          -o tls=auto \
-          -o ssl=auto \
-          -o tls_version=TLSv1_2 \
-          -o message-content-type=text
-
+          -o tls=yes
 
 echo "[INFO] Email sent successfully."
 
