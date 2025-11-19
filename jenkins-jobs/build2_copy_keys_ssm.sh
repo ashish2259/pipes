@@ -20,10 +20,13 @@ fi
 echo "[INFO] Reading public key..."
 PUBKEY=$(cat "$PUBKEY_PATH" | sed 's/"/\\"/g')
 
-SSM_CMD="mkdir -p /home/ec2-user/.ssh && \
-echo \"$PUBKEY\" >> /home/ec2-user/.ssh/authorized_keys && \
-chmod 600 /home/ec2-user/.ssh/authorized_keys && \
-chown ec2-user:ec2-user /home/ec2-user/.ssh/authorized_keys"
+SSM_CMD=$(cat <<EOF
+mkdir -p /home/ec2-user/.ssh
+echo "$PUBKEY" >> /home/ec2-user/.ssh/authorized_keys
+chmod 600 /home/ec2-user/.ssh/authorized_keys
+chown ec2-user:ec2-user /home/ec2-user/.ssh/authorized_keys
+EOF
+)
 
 echo "[INFO] Sending SSM command to all instances..."
 
