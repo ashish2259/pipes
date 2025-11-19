@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-TO_EMAIL="demofortest1@fusionnex.net"
-FROM_EMAIL="demofortest1@fusionnex.net"
+TO_EMAIL="m.ashish2017@gmail.com"
+FROM_EMAIL="m.ashish2017@gmail.com"
 SUBJECT="PRE-PATCHING APPROVAL REQUIRED"
 BODY="Patching will start soon. Click this link to approve: https://your-jenkins-url/job/build4-patching/build"
 
