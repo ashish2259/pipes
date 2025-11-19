@@ -13,7 +13,7 @@ SMTP_PORT="587"
 SMTP_USER="$SES_USERNAME"
 SMTP_PASS="$SES_PASSWORD"
 
-sendE   mail -f "$FROM_EMAIL" \
+sendEmail -f "$FROM_EMAIL" \
           -t "$TO_EMAIL" \
           -u "$SUBJECT" \
           -m "$BODY" \
